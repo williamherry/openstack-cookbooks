@@ -91,9 +91,9 @@ monitoring_metric "glance-registry-proc" do
 end
 
 execute "glance-manage db_sync" do
-        command "sudo -u glance glance-manage db_sync"
-        action :nothing
-        notifies :restart, resources(:service => "glance-registry"), :immediately
+  command "sudo -u glance glance-manage db_sync"
+  action :nothing
+  notifies :restart, resources(:service => "glance-registry"), :immediately
 end
 
 # Having to manually version the database because of Ubuntu bug
@@ -101,8 +101,7 @@ end
 execute "glance-manage version_control" do
   command "sudo -u glance glance-manage version_control 0"
   action :nothing
-  not_if "sudo -u glance glance-manage db_version"
-  notifies :run, resources(:execute => "glance-manage db_sync"), :immediately
+  not_if "sudo -u glance glance-manage db_version" or { platform?(%w{centos}) }
 end
 
 file "/var/lib/glance/glance.sqlite" do
@@ -172,6 +171,7 @@ template "/etc/glance/glance-registry.conf" do
     "log_facility" => node["glance"]["syslog"]["facility"]
   )
   notifies :run, resources(:execute => "glance-manage version_control"), :immediately
+  notifies :run, resources(:execute => "glance-manage db_sync"), :immediately
 end
 
 template "/etc/glance/glance-registry-paste.ini" do
