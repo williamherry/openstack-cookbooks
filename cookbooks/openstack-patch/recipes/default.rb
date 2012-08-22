@@ -21,8 +21,4 @@ when "centos"
     action :install
   end
 
-  # remove rabbitmq-server cause we will install from another place
-  package "rabbitmq-server" do
-    action :remove
-  end
 end
