@@ -20,4 +20,9 @@ when "centos"
   rpm_package "/tmp/pssh-2.3-1.el6.rf.noarch.rpm" do
     action :install
   end
+
+  # remove rabbitmq-server cause we will install from another place
+  package "rabbitmq-server" do
+    action :remove
+  end
 end
