@@ -6,7 +6,7 @@ if [ ! -f /usr/bin/chef-client ]; then
   mkdir /etc/chef
   cd /opt/chef
   curl -L http://www.opscode.com/chef/install.sh | bash
-  /usr/sbin/ntpdate 210.72.145.44
+  /usr/sbin/ntpdate pool.ntp.org
 fi
 
 (
