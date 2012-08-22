@@ -1,0 +1,78 @@
+{
+  "name": "openstack",
+  "description": "",
+  "cookbook_versions": {
+  },
+  "json_class": "Chef::Environment",
+  "chef_type": "environment",
+  "default_attributes": {
+    "mysql": {
+      "allow_remote_root": true,
+      "root_network_acl": "%"
+    },
+    "nova": {
+      "network": {
+        "public_interface": "eth0"
+      }
+    }
+  },
+  "override_attributes": {
+    "developer_mode": false,
+    "monitoring" : { "procmon_provider" : "none" },
+    "keystone" : {
+      "tenants" : [ "admin", "service", "demo" ],
+      "admin_user" : "admin",
+      "users" : {
+        "admin" : {
+          "password" : "password",
+          "roles" : {
+            "admin" : [ "admin", "demo" ]
+          }
+        },
+        "demo" : {
+          "password" : "password",
+          "default_tenant" : "demo",
+          "roles" : {
+            "Member" : [ "demo" ]
+          }
+        }
+      }
+    },
+    "glance": {
+      "image" : {
+        "precise" : "file:///opt/rpcs/precise-server-cloudimg-amd64.tar.gz",
+        "cirros" : "file:///opt/rpcs/cirros-0.3.0-x86_64-uec.tar.gz"
+      },
+      "images": [
+        "cirros",
+        "precise"
+      ],
+      "image_upload": false
+    },
+    "nova": {
+      "network": {
+        "fixed_range": "172.31.0.0/24",
+        "dmz_cidr": "10.128.0.0/24"
+      },
+      "apply_patches": false,
+      "networks": [
+        {
+        "bridge_dev": "eth1",
+        "num_networks": "1",
+        "network_size": "254",
+        "bridge": "br0",
+        "ipv4_cidr": "172.31.0.0/24",
+        "label": "public",
+        "dns1": "8.8.8.8",
+        "dns2": "8.8.4.4"
+      }
+      ]
+    },
+    "osops_networks": {
+      "management": "192.168.24.0/24",
+      "nova": "192.168.24.0/24",
+      "public": "192.168.24.0/24"
+    },
+    "enable_monit": true
+  }
+}
