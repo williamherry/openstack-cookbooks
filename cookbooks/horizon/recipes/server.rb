@@ -112,6 +112,11 @@ cookbook_file "#{node["horizon"]["ssl"]["dir"]}/private/#{node["horizon"]["ssl"]
   notifies :run, "execute[restore-selinux-context]", :immediately
 end
 
+directory "#{node["apache"]["dir"]}/vhost.d" do
+  action :create
+  only_if { platform?(%w{centos}) }
+end
+
 template value_for_platform(
   [ "ubuntu","debian","fedora" ] => { "default" => "#{node["apache"]["dir"]}/sites-available/openstack-dashboard" },
   [ "redhat","centos" ] => { "default" => "#{node["apache"]["dir"]}/vhost.d/openstack-dashboard" },
