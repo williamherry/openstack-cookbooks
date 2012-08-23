@@ -79,13 +79,19 @@ template "/etc/openstack-dashboard/local_settings.py" do
   )
 end
 
+# ln -s /etc/openstack-dashboard/local_settings.py /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py
+link "/etc/openstack-dashboard/local_settings.py" do
+  to "/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py"
+end
+
+
 # FIXME: this shouldn't run every chef run
 execute "openstack-dashboard syncdb" do
   cwd "/usr/share/openstack-dashboard"
   environment ({'PYTHONPATH' => '/etc/openstack-dashboard:/usr/share/openstack-dashboard:$PYTHONPATH'})
   command "python manage.py syncdb"
   action :run
-  only_if { platform?("ubuntu","debian") }
+  #only_if { platform?("ubuntu","debian") }
   # not_if "/usr/bin/mysql -u root -e 'describe #{node["dash"]["db"]}.django_content_type'"
 end
 
