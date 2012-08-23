@@ -118,7 +118,7 @@ cookbook_file "#{node["horizon"]["ssl"]["dir"]}/private/#{node["horizon"]["ssl"]
   notifies :run, "execute[restore-selinux-context]", :immediately
 end
 
-if platform?("centos") do
+if platform?("centos")
   directory "#{node["apache"]["dir"]}/vhost.d" do
     action :create
     only_if { platform?(%w{centos}) }
