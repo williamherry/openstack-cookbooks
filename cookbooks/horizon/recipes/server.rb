@@ -72,16 +72,11 @@ template "/etc/openstack-dashboard/local_settings.py" do
             :passwd => node["horizon"]["db"]["password"],
             :db_name => node["horizon"]["db"]["name"],
             :db_ipaddress => mysql_info["bind_address"],
-            :keystone_api_ipaddress => ks_admin_endpoint["host"],
+            :keystone_api_ipaddress => ks_service_endpoint["host"],
             :service_port => ks_service_endpoint["port"],
             :admin_port => ks_admin_endpoint["port"],
             :admin_token => keystone["admin_token"]
   )
-end
-
-# ln -s /etc/openstack-dashboard/local_settings.py /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py
-link "/etc/openstack-dashboard/local_settings.py" do
-  to "/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py"
 end
 
 
