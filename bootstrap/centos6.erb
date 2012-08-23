@@ -6,8 +6,10 @@ if [ ! -f /usr/bin/chef-client ]; then
   mkdir /etc/chef
   cd /opt/chef
   curl -L http://www.opscode.com/chef/install.sh | bash
-  /usr/sbin/ntpdate pool.ntp.org
 fi
+
+yum -y install ntpdate
+ntpdate pool.ntp.org
 
 (
 cat <<'EOP'

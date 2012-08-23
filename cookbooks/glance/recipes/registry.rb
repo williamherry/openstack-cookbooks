@@ -101,13 +101,13 @@ end
 execute "glance-manage version_control" do
   command "sudo -u glance glance-manage version_control 0"
   action :nothing
-  not_if "sudo -u glance glance-manage db_version"
-  only_if { platform?(%w{centos}) }
+  not_if "sudo -u glance glance-manage db_version" || platform?(%w{centos})
 end
 
 file "/var/lib/glance/glance.sqlite" do
     action :delete
 end
+
 
 # Register Service Tenant
 keystone_register "Register Service Tenant" do
