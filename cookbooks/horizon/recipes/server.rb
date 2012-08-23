@@ -112,9 +112,17 @@ cookbook_file "#{node["horizon"]["ssl"]["dir"]}/private/#{node["horizon"]["ssl"]
   notifies :run, "execute[restore-selinux-context]", :immediately
 end
 
-directory "#{node["apache"]["dir"]}/vhost.d" do
-  action :create
-  only_if { platform?(%w{centos}) }
+if platform?("centos") do
+  directory "#{node["apache"]["dir"]}/vhost.d" do
+    action :create
+    only_if { platform?(%w{centos}) }
+  end
+
+  # installed by default on centos/rhel, remove in favour of mods-enabled
+  file "#{node['apache']['dir']}/conf.d/README" do
+    action :delete
+    backup false
+  end
 end
 
 template value_for_platform(

@@ -20,7 +20,7 @@ There are a number of different chef roles that are included with these cookbook
 
 * clone the parent repository (note the `--recursive` flag - this will ensure that each of the repositories that the submodules point to is also cloned):
 
-`git clone --recursive https://github.com:williamherry/openstack-cookbooks.git`
+`git clone --recursive https://github.com/williamherry/openstack-cookbooks.git`
 
 * upload your cookbooks and roles to your chef server( assuming  you have already [configured your knife client](http://wiki.opscode.com/display/chef/Fast+Start+Guide) with the credentials of your chef server:
 
