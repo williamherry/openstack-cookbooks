@@ -11,6 +11,7 @@
 case node[:platform]
 when "centos"
   include_recipe "selinux::disabled"
+  include_recipe "yum::epel"
 
   cookbook_file "/tmp/pssh-2.3-1.el6.rf.noarch.rpm" do
     source "pssh-2.3-1.el6.rf.noarch.rpm"
