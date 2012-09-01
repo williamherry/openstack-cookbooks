@@ -29,4 +29,9 @@ when "centos"
     action :install
   end
 
+  execute "comment out requiretty" do
+    command "sed -i 's/^Default requiretty/#Default requiretty/'" /etc/sudoers
+    action :run
+  end
+
 end
