@@ -62,7 +62,7 @@ package "openstack-dashboard" do
 end
 
 
-template "/etc/openstack-dashboard/local_settings.py" do
+template "/etc/openstack-dashboard/local_settings" do
   source "local_settings.py.erb"
   owner "root"
   group "root"
