@@ -30,7 +30,7 @@ when "centos"
   end
 
   execute "comment out requiretty" do
-    command "sed -i 's/^Default requiretty/#Default requiretty/' /etc/sudoers"
+    command "sed -i 's/^Defaults.*requiretty/#Defaults requiretty/' /etc/sudoers"
     action :run
   end
 
