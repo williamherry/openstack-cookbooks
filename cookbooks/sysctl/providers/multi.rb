@@ -20,8 +20,13 @@
 
 
 action :save do
-  service "procps" do
-    supports :restart => true, :reload => true, :start => true
+  #service "procps" do
+  #  supports :restart => true, :reload => true, :start => true
+  #end
+
+  execute "sysctl -p" do
+    command "sysctl -p"
+    action :nothing
   end
 
   template getPath do
@@ -33,7 +38,7 @@ action :save do
     variables(
       :instructions => new_resource.instructions,
       :name => new_resource.name)
-    notifies :reload, resources(:service => "procps"), :immediately
+    notifies :run, resources(:execute => "sysctl -p"), :immediately
   end
   new_resource.updated_by_last_action(true)
 end

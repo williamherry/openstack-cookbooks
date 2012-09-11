@@ -23,7 +23,7 @@ include_recipe "monitoring"
 platform_options = node["nova"]["platform"]
 
 case node["platform"]
-when "ubuntu","debian"
+when "ubuntu", "debian", "centos"
   platform_options["nova_vncproxy_packages"].each do |pkg|
     package pkg do
       action :upgrade
