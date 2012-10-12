@@ -102,7 +102,7 @@ default["nova"]["config"]["osapi_max_limit"] = 1000
 default["nova"]["config"]["cpu_allocation_ratio"] = 16.0
 default["nova"]["config"]["ram_allocation_ratio"] = 1.5
 default["nova"]["config"]["snapshot_image_format"] = "qcow2"
-default["nova"]["config"]["start_guests_on_host_boot"] = true
+default["nova"]["config"]["start_guests_on_host_boot"] = false
 # requires https://review.openstack.org/#/c/8423/
 default["nova"]["config"]["resume_guests_state_on_host_boot"] = false
 
@@ -119,17 +119,17 @@ default["nova"]["ratelimit"]["volume"]["enabled"] = true
 case platform
 when "fedora", "redhat", "centos"
   default["nova"]["platform"] = {
-    "api_ec2_packages" => ["openstack-nova"],
+    "api_ec2_packages" => ["openstack-nova-api"],
     "api_ec2_service" => "openstack-nova-api",
-    "api_os_compute_packages" => ["openstack-nova"],
+    "api_os_compute_packages" => ["openstack-nova-api"],
     "api_os_compute_service" => "openstack-nova-api",
     "api_os_volume_packages" => ["openstack-nova"],
     "api_os_volume_service" => "openstack-nova-api",
-    "nova_volume_packages" => ["openstack-nova"],
+    "nova_volume_packages" => ["openstack-nova-volume"],
     "nova_volume_service" => "openstack-nova-volume",
-    "nova_api_metadata_packages" => ["openstack-nova"],
+    "nova_api_metadata_packages" => ["openstack-nova-api"],
     "nova_api_metadata_service" => "openstack-nova-api",
-    "nova_compute_packages" => ["openstack-nova"], # seriously?
+    "nova_compute_packages" => ["openstack-nova-compute", "dnsmasq-utils"], # seriously?
     "nova_compute_service" => "openstack-nova-compute",
     "nova_network_packages" => ["iptables", "openstack-nova"],
     "nova_network_service" => "openstack-nova-network",
@@ -141,10 +141,10 @@ when "fedora", "redhat", "centos"
     "nova_vncproxy_consoleauth_service" => "openstack-nova-consoleauth",
     "libvirt_packages" => ["libvirt"],
     "libvirt_service" => "libvirtd",
-    "nova_cert_packages" => ["openstack-nova"],
+    "nova_cert_packages" => ["openstack-nova-cert"],
     "nova_cert_service" => "openstack-nova-cert",
     "mysql_service" => "mysqld",
-    "common_packages" => ["openstack-nova"],
+    "common_packages" => ["openstack-nova-common"],
     "iscsi_helper" => "ietadm",
     "package_overrides" => "",
   }

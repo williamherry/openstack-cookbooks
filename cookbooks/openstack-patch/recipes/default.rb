@@ -15,6 +15,8 @@ when "centos"
 
   package "gcc"
   package "make"
+  package "sudo"
+  package "cronie"
 
   package "qpid-cpp-server" do
     action :remove

@@ -12,7 +12,7 @@ dhcpbridge_flagfile=/etc/nova/nova.conf
 dhcpbridge=/usr/bin/nova-dhcpbridge
 logdir=/var/log/nova
 <% if @use_syslog == true %>
-use_syslog=<%= @use_syslog %>
+#use_syslog=<%= @use_syslog %>
 syslog_log_facility=<%= @log_facility %>
 <% end %>
 state_path=/var/lib/nova
@@ -75,8 +75,9 @@ force_raw_images=<%= @force_raw_images %>
 allow_same_net_traffic=<%= @allow_same_net_traffic %>
 osapi_max_limit=<%= @osapi_max_limit %>
 snapshot_image_format=<%= @snapshot_image_format %>
-start_guests_on_host_boot=<%= @start_guests_on_host_boot %>
-resume_guests_state_on_host_boot=<%= @resume_guests_state_on_host_boot %>
+#start_guests_on_host_boot=<%= @start_guests_on_host_boot %>
+#resume_guests_state_on_host_boot=<%= @resume_guests_state_on_host_boot %>
+dhcp_lease_time=10800
 
 <%- if /FilterScheduler/.match(@scheduler_driver) or
        /MultiScheduler/.match(@scheduler_driver) %>
